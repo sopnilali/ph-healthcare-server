@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Admin, Prisma, UserStatus } from "@prisma/client";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { IPaginationOptions } from "../../interface/pagination.type";
 import { IAdminFilterRequest } from "./admin.interface";
@@ -65,6 +65,81 @@ const getAllUserIntoDB = async (params: IAdminFilterRequest, options: IPaginatio
 
 }
 
+
+const getByIdIntoDB = async(id: string)=> {
+    const result = await prisma.admin.findUnique({
+        where: {id, isDeleted: false}
+    })
+    return result
+}
+
+const updateAdminIntoDB = async(id: string, payload: Partial<Admin>)=>{
+    const verifyAdmin = await prisma.$transaction(async(transactionClient)=> {
+        await transactionClient.admin.findFirstOrThrow({
+            where: {id, isDeleted: false}
+        })
+
+        const updateadmin = await transactionClient.admin.update({
+            where: {id},
+            data: payload
+
+        })
+        return updateadmin
+
+    })
+    return verifyAdmin
+} 
+
+const deleteAdminIntoDB = async(id: string)=> {
+    await prisma.admin.findFirstOrThrow({
+        where: {id}
+    })
+
+    const result = await prisma.$transaction(async(transactionClient)=> {
+        const adminDeleteData = await transactionClient.admin.delete({
+            where: {id}
+        })
+
+        await transactionClient.user.delete({
+            where: {
+                email: adminDeleteData.email
+            }
+        })
+        return adminDeleteData;
+    })
+    return result
+}
+
+const softDeleteAdminIntoDB = async(id: string) => {
+    await prisma.admin.findFirstOrThrow({
+        where: {id}
+    })
+
+    const result = await prisma.$transaction(async(transactionClient)=> {
+        const adminDeleteData = await transactionClient.admin.update({
+            where: {id},
+            data: {
+                isDeleted: true
+            }
+        })
+        await transactionClient.user.update({
+            where: {
+                email: adminDeleteData.email
+            },
+            data: {
+                status: UserStatus.DELETED
+            }
+        })
+    })
+    return result
+
+}
+
+
 export const AdminServices = {
-    getAllUserIntoDB
+    getAllUserIntoDB,
+    getByIdIntoDB,
+    updateAdminIntoDB,
+    deleteAdminIntoDB,
+    softDeleteAdminIntoDB
 }

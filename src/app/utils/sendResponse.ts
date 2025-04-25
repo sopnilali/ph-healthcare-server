@@ -9,7 +9,7 @@ type TResponse<T> = {
     limit: number,
     total: number
 },
-  data?: T;
+  data?: T | null | undefined;
 };
 
 const sendResponse = <T>(res: Response, data: TResponse<T>) => {

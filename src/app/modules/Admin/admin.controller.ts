@@ -14,12 +14,58 @@ const getAllFromDB = catchAsync(async (req, res) => {
     sendResponse(res, {
         statusCode: httpStatus.OK,
         success: true,
-        message: "Admin data fetched!",
+        message: "Admin users data fetched!",
         meta: result.meta,
         data: result.data
     })
 })
 
+const getAdminById = catchAsync(async(req, res)=> {
+    const {id} = req.params
+    const result = await AdminServices.getByIdIntoDB(id)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Admin data fetched!",
+        data: result
+    })
+})
+
+const updateAdmin = catchAsync(async(req, res)=>{
+    const {id} = req.params
+    const result = await AdminServices.updateAdminIntoDB(id, req.body)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Admin data update successfully!",
+        data: result
+    })
+})
+
+const deleteAdmin = catchAsync(async(req, res)=> {
+    const {id} = req.params
+    await AdminServices.deleteAdminIntoDB(id)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Admin delete is successfully!"
+    })
+})
+
+const softDeleteAdmin = catchAsync(async(req, res)=> {
+    const {id} = req.params
+    await AdminServices.softDeleteAdminIntoDB(id)
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "Admin delete is successfully!"
+    })
+})
+
 export const AdminController = {
-    getAllFromDB
+    getAllFromDB,
+    getAdminById,
+    updateAdmin,
+    softDeleteAdmin,
+    deleteAdmin
 }
