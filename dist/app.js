@@ -18,6 +18,7 @@ app.use((0, cors_1.default)({
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use('/api/', routes_1.default);
+app.use(globalErrorhandler_1.default);
 //global api route
 app.get('/', (req, res) => {
     res.json({
@@ -25,6 +26,5 @@ app.get('/', (req, res) => {
         message: 'Welcome to PH Healthcare',
     });
 });
-app.use(globalErrorhandler_1.default);
 app.use(notFound_1.default);
 exports.default = app;

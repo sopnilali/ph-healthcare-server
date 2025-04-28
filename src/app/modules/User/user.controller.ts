@@ -3,9 +3,9 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { userServices } from "./user.service";
 import httpStatus from "http-status";
-import { UserValidation } from "./user.validation";
 import pick from "../../../shared/pick";
 import { paginationFields, userFilterableFields } from "./user.constant";
+import { IAuth } from "../../interface/common";
 
 
 const CreateAdmin = catchAsync(async(req, res)=> {

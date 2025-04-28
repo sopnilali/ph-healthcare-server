@@ -5,6 +5,8 @@ import { AuthRoutes } from "../modules/Auth/auth.route";
 import { DoctorRoutes } from "../modules/Doctor/doctor.route";
 import { SpecialitiesRoutes } from "../modules/Specialties/specialties.route";
 import { PatientRoutes } from "../modules/Patient/patient.route";
+import { ScheduleRoutes } from "../modules/Schedule/schedule.route";
+import { DoctorScheduleRoutes } from "../modules/DoctorSchedule/doctorSchedulte.route";
 
 const router = Router();
 
@@ -33,6 +35,14 @@ const moduleRoutes = [
     {
         path: "/patient",
         routes: PatientRoutes
+    },
+    {
+        path: "/schedule",
+        routes: ScheduleRoutes
+    },
+    {
+        path: "/doctor-schedule",
+        routes: DoctorScheduleRoutes
     }
 ]
 

@@ -148,7 +148,7 @@ CREATE TABLE "schedules" (
 CREATE TABLE "doctor_schedules" (
     "doctorId" TEXT NOT NULL,
     "scheduleId" TEXT NOT NULL,
-    "isBooked" BOOLEAN NOT NULL,
+    "isBooked" BOOLEAN NOT NULL DEFAULT false,
     "appointmentId" TEXT,
 
     CONSTRAINT "doctor_schedules_pkey" PRIMARY KEY ("doctorId","scheduleId")

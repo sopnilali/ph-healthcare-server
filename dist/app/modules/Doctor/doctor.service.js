@@ -136,7 +136,6 @@ const updateIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function
             }
             // create specialties
             const createSpecialtiesIds = specialties.filter(specialty => !specialty.isDeleted);
-            console.log(createSpecialtiesIds);
             for (const specialty of createSpecialtiesIds) {
                 yield transactionClient.doctorSpecialties.create({
                     data: {
@@ -195,7 +194,6 @@ const softDeleteDoctorIntoDB = (req) => __awaiter(void 0, void 0, void 0, functi
                 status: client_1.UserStatus.DELETED
             }
         });
-        console.log(deleteVerify);
     }));
     return result;
 });

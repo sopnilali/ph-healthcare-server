@@ -20,6 +20,7 @@ app.use(express.json())
 
 app.use('/api/', router)
 
+app.use(globalErrorHandler)
 
 
 //global api route
@@ -30,7 +31,7 @@ app.get('/', (req: Request, res: Response) => {
     })
 })
 
-app.use(globalErrorHandler)
+
 app.use(notFound)
 
 

@@ -3,7 +3,6 @@ import { paginationHelper } from "../../../helpers/paginationHelper";
 import { IPaginationOptions } from "../../interface/pagination.type";
 import { doctorSearchAbleFields } from "./doctor.constant";
 import prisma from "../../utils/prisma";
-import { FileUploader } from "../../../helpers/fileUploader";
 import { IDoctorUpdate } from "./doctor.interface";
 
 const GetAllDoctorIntoDB = async(filter: any, options: IPaginationOptions)=> {
@@ -132,7 +131,6 @@ const updateIntoDB = async (id: string, payload: IDoctorUpdate) => {
 
             // create specialties
             const createSpecialtiesIds = specialties.filter(specialty => !specialty.isDeleted);
-            console.log(createSpecialtiesIds)
             for (const specialty of createSpecialtiesIds) {
                 await transactionClient.doctorSpecialties.create({
                     data: {
@@ -201,7 +199,6 @@ const softDeleteDoctorIntoDB = async(req: any)=> {
                 status: UserStatus.DELETED
             }
         })
-        console.log(deleteVerify)
     })
     return result
 }

@@ -2,11 +2,11 @@ import { Prisma, UserRole, UserStatus } from "@prisma/client";
 import * as bcrypt from 'bcrypt'
 import prisma from "../../utils/prisma";
 import { IFile } from "../../interface/file.type";
-import { parse } from "path";
 import { FileUploader } from "../../../helpers/fileUploader";
 import { IPaginationOptions } from "../../interface/pagination.type";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { userSearchAbleFields } from "./user.constant";
+import { IAuth } from "../../interface/common";
 
 
 
